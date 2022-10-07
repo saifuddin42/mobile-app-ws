@@ -2,17 +2,17 @@ package com.zeus.app.ws.ui.model.response;
 
 public class UserRest {
 
-    private String userId;
+    private String userID;
     private String firstName;
     private String lastName;
     private String email;
 
-    public String getUserId() {
-        return userId;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getFirstName() {

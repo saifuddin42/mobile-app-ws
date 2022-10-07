@@ -9,7 +9,7 @@ public class UserEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private long ID;
 
 	@Column(nullable=false)
 	private String userID;
@@ -31,20 +31,20 @@ public class UserEntity implements Serializable {
 	@Column(nullable=false)
 	private Boolean emailVerificationStatus = false;
 
-	public long getId() {
-		return id;
+	public long getID() {
+		return ID;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setID(long ID) {
+		this.ID = ID;
 	}
 
-	public String getUserId() {
+	public String getUserID() {
 		return userID;
 	}
 
-	public void setUserId(String userId) {
-		this.userID = userId;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 
 	public String getFirstName() {

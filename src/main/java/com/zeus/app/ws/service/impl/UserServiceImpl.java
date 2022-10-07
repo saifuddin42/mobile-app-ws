@@ -7,11 +7,13 @@ import com.zeus.app.ws.shared.Utils;
 import com.zeus.app.ws.shared.dao.UserDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		BeanUtils.copyProperties(user, userEntity);
 
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		userEntity.setUserId(util.generateUserID(30));
+		userEntity.setUserID(util.generateUserID(30));
 
 		storedUserDetails = userRepository.save(userEntity);
 
@@ -48,21 +50,27 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO getUser(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+
+		if(userEntity == null) throw new UsernameNotFoundException(email);
+
+		UserDTO returnVal = new UserDTO();
+		BeanUtils.copyProperties(userEntity, returnVal);
+		return returnVal;
+	}
+
+	@Override
+	public UserDTO getUserByUserID(String userID) {
 		return null;
 	}
 
 	@Override
-	public UserDTO getUserByUserId(String userId) {
+	public UserDTO updateUser(String userID, UserDTO user) {
 		return null;
 	}
 
 	@Override
-	public UserDTO updateUser(String userId, UserDTO user) {
-		return null;
-	}
-
-	@Override
-	public void deleteUser(String userId) {
+	public void deleteUser(String userID) {
 
 	}
 
@@ -87,7 +95,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return null;
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { // can use overridden this method to check for user in db for sign in
+		UserEntity userEntity = userRepository.findByEmail(email); // we are using email as unique username
+
+		if(userEntity == null) throw new UsernameNotFoundException(email);
+
+		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
 	}
 }

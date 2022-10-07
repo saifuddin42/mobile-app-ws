@@ -8,9 +8,9 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
 	UserDTO createUser(UserDTO user);
 	UserDTO getUser(String email);
-	UserDTO getUserByUserId(String userId);
-	UserDTO updateUser(String userId, UserDTO user);
-	void deleteUser(String userId);
+	UserDTO getUserByUserID(String userID);
+	UserDTO updateUser(String userID, UserDTO user);
+	void deleteUser(String userID);
 	List<UserDTO> getUsers(int page, int limit);
 	boolean verifyEmailToken(String token);
 	boolean requestPasswordReset(String email);
