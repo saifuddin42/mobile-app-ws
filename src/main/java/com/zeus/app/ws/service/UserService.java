@@ -1,12 +1,11 @@
 package com.zeus.app.ws.service;
 
 import com.zeus.app.ws.shared.dao.UserDTO;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-@Service
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	UserDTO createUser(UserDTO user);
 	UserDTO getUser(String email);
 	UserDTO getUserByUserId(String userId);

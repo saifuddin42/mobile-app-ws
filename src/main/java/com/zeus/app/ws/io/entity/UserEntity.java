@@ -3,7 +3,7 @@ package com.zeus.app.ws.io.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name="users")
+@Entity(name="users") // name is the table name
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 3378639967140819578L;
 
@@ -12,7 +12,7 @@ public class UserEntity implements Serializable {
 	private long id;
 
 	@Column(nullable=false)
-	private String userId;
+	private String userID;
 
 	@Column(nullable=false, length=50)
 	private String firstName;
@@ -20,7 +20,7 @@ public class UserEntity implements Serializable {
 	@Column(nullable=false, length=50)
 	private String lastName;
 
-	@Column(nullable=false, length=120)
+	@Column(nullable=false, length=120, unique = true)
 	private String email;
 
 	@Column(nullable=false)
@@ -40,11 +40,11 @@ public class UserEntity implements Serializable {
 	}
 
 	public String getUserId() {
-		return userId;
+		return userID;
 	}
 
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.userID = userId;
 	}
 
 	public String getFirstName() {

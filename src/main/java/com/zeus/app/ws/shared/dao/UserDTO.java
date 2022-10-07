@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
 
-	public static final long serialVersionUID = -8953096794128761728L;
+	public static final long serialVersionUID = 8953096794128761728L;
 	private long id;
 	private String userId;
 	private String firstName;
