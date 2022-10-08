@@ -6,6 +6,7 @@ import com.zeus.app.ws.ui.model.request.UserDetailsRequestModel;
 import com.zeus.app.ws.ui.model.response.UserRest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,12 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping(path="/{ID}")
+	@GetMapping(path="/{ID}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+								//produces ensures that the response is only
+								// in that particular type in order (if you don't want to use dependency like jackson)
+								// OR if produces is not mentioned at all it returns
+								// in whatever format is asked by the Accept header in
+								// the request (but requires the jackson xml dependency)
 	public UserRest getUser(@PathVariable String ID) {
 		UserRest response = new UserRest();
 
@@ -25,7 +31,8 @@ public class UserController {
 		return response;
 	}
 
-	@PostMapping
+	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+				 consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
 
 		UserRest response = new UserRest();
