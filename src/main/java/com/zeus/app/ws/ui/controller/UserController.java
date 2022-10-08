@@ -1,8 +1,10 @@
 package com.zeus.app.ws.ui.controller;
 
+import com.zeus.app.ws.exceptions.UserServiceException;
 import com.zeus.app.ws.service.UserService;
 import com.zeus.app.ws.shared.dao.UserDTO;
 import com.zeus.app.ws.ui.model.request.UserDetailsRequestModel;
+import com.zeus.app.ws.ui.model.response.ErrorMessages;
 import com.zeus.app.ws.ui.model.response.UserRest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,9 @@ public class UserController {
 
 	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 				 consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+
+		if(userDetails.getFirstName().isEmpty() || userDetails.getLastName().isEmpty() || userDetails.getEmail().isEmpty() || userDetails.getPassword().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
 		UserRest response = new UserRest();
 		UserDTO userDTO = new UserDTO();
